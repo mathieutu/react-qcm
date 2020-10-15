@@ -80,7 +80,7 @@ export default function Questions() {
           <div className="flex flex-wrap -mx-5">
             {questions[currentQuestionIndex].answers.map((answer) => (
               <AnswersCard
-                key={answer.key}
+                key={questions[currentQuestionIndex].id.concat(answer.key)}
                 answer={answer}
                 onAnswerCheckedChange={handleAnswerChange}
               />
