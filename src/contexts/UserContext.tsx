@@ -1,35 +1,42 @@
 import React, { createContext, PropsWithChildren, useEffect } from "react";
 import { useState } from "react";
 
+export type User = {
+  email: string;
+  name: string;
+  id: string;
+} | null;
+
 type ContextType = {
-  email: string | null;
-  onEmail(email: string): void;
+  user: User;
+  onUserChange(user: User): void;
 };
 
 export const UserContext = createContext<ContextType>({
-  email: null,
-  onEmail: () => {},
+  user: null,
+  onUserChange: () => {},
 });
 
 export default function UserContextProvider({
   children,
 }: PropsWithChildren<{}>) {
-  const [email, setEmail] = useState<string | null>(null);
+  const [user, setUser] = useState<User>(null);
 
   useEffect(() => {
-    const mailItem = localStorage.getItem("mail");
-    if (mailItem) {
-      setEmail(mailItem);
+    const userItem = localStorage.getItem("userLogged");
+    if (userItem) {
+      setUser(JSON.parse(userItem) as User);
     }
   }, []);
 
-  const handleEmailChange = (mail: string) => {
-    localStorage.setItem("mail", mail);
-    setEmail(mail);
+  const onUserChange = (usr: User) => {
+    setUser({ email: usr!.email, id: usr!.id, name: usr!.name });
+    localStorage.setItem("userLogged", JSON.stringify(usr));
+    console.log(usr);
   };
 
   return (
-    <UserContext.Provider value={{ email, onEmail: handleEmailChange }}>
+    <UserContext.Provider value={{ user, onUserChange }}>
       {children}
     </UserContext.Provider>
   );
