@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import QuestionCard from "../components/QuestionCard";
 import { questions } from "../config/questions";
 import { gql, useMutation } from "@apollo/client";
-import { UserContext } from "../contexts/UserContext";
+import { userContext } from "../contexts/UserContext";
 
 const ADD_ANSWER = gql`
   mutation AddAnswer($answers: String!, $questionId: String!, $userId: uuid!) {
@@ -24,7 +24,7 @@ export default function Questions() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 
   const [answers, setAnswers] = useState<string[]>([]);
-  const { user } = useContext(UserContext);
+  const { user } = useContext(userContext);
 
   useEffect(() => {
     const currentQuestion = localStorage.getItem("currentQuestion");

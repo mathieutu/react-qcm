@@ -12,7 +12,7 @@ type ContextType = {
   onUserChange(user: User): void;
 };
 
-export const UserContext = createContext<ContextType>({
+export const userContext = createContext<ContextType>({
   user: null,
   onUserChange: () => {},
 });
@@ -36,8 +36,8 @@ export default function UserContextProvider({
   };
 
   return (
-    <UserContext.Provider value={{ user, onUserChange }}>
+    <userContext.Provider value={{ user, onUserChange }}>
       {children}
-    </UserContext.Provider>
+    </userContext.Provider>
   );
 }

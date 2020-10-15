@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { userContext } from "../contexts/UserContext";
 
 export default function Header() {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(userContext);
 
   return (
     <div className="w-full bg-white shadow-md">

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { User, UserContext } from "../contexts/UserContext";
+import { User, userContext } from "../contexts/UserContext";
 import { gql, useMutation } from "@apollo/client";
 
 type LoginInput = {
@@ -34,7 +34,7 @@ export default function Login() {
   const { errors, handleSubmit, register } = useForm<LoginInput>({
     resolver: joiResolver(schema),
   });
-  const { onUserChange } = useContext(UserContext);
+  const { onUserChange } = useContext(userContext);
 
   const [addUser, { called, loading }] = useMutation(LOGIN_QUERY);
 
