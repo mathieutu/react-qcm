@@ -3,28 +3,16 @@ import AnswersCard from "../components/AnswersCard";
 import Header from "../components/Header";
 import QuestionCard from "../components/QuestionCard";
 import { questions } from "../config/questions";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { userContext } from "../contexts/UserContext";
-
-const ADD_ANSWER = gql`
-  mutation AddAnswer($answers: String!, $questionId: String!, $userId: uuid!) {
-    addAnswer(
-      object: { answer: $answers, question_id: $questionId, user_id: $userId }
-    ) {
-      id
-      question_id
-      answer
-      user_id
-    }
-  }
-`;
+import { ADD_ANSWER } from "../graphql/mutations";
 
 export default function Questions() {
   const [addAnswer, { loading, called }] = useMutation(ADD_ANSWER);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 
   const [answers, setAnswers] = useState<string[]>([]);
-  const { user } = useContext(userContext);
+  const { user } = useContext(userContext)!;
 
   useEffect(() => {
     const currentQuestion = localStorage.getItem("currentQuestion");
@@ -82,6 +70,7 @@ export default function Questions() {
               <AnswersCard
                 key={questions[currentQuestionIndex].id.concat(answer.key)}
                 answer={answer}
+                active={answers.includes(answer.key)}
                 onAnswerCheckedChange={handleAnswerChange}
               />
             ))}

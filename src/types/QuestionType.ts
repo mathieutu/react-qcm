@@ -7,7 +7,7 @@ export type Answer = {
 
 export type QuestionType = {
   id: string;
-  content: string | ReactNode;
+  content: ReactNode;
   answers: Answer[];
 };
 

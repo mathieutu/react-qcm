@@ -1,6 +1,10 @@
 import { Questions } from "../types/QuestionType";
 import React from "react";
 
+export const config = {
+  totalTime: 60, // minutes
+};
+
 export const questions: Questions = [
   {
     id: "test",

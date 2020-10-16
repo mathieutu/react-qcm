@@ -1,21 +1,19 @@
 import clsx from "clsx";
 import React from "react";
-import { useToggle } from "../hooks/useToggle";
 import { Answer } from "../types/QuestionType";
 
 type AnswerProps = {
   answer: Answer;
+  active: boolean;
   onAnswerCheckedChange(key: string): void;
 };
 
 export default function AnswersCard({
   answer,
+  active,
   onAnswerCheckedChange,
 }: AnswerProps) {
-  const { value, toggle } = useToggle(false);
-
   const handleClick = () => {
-    toggle();
     onAnswerCheckedChange(answer.key);
   };
 
@@ -24,7 +22,7 @@ export default function AnswersCard({
       <div
         role="button"
         className={clsx(
-          [!value ? "bg-green-300" : "bg-white"],
+          [active ? "bg-green-300" : "bg-white"],
           "shadow-sm rounded-md"
         )}
         onClick={handleClick}

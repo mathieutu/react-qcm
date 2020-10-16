@@ -7,20 +7,22 @@ export type User = {
   id: string;
 } | null;
 
-type ContextType = {
-  user: User;
-  onUserChange(user: User): void;
-};
+type ContextType =
+  | {
+      user?: User;
+      isFinished?: boolean;
+      setIsFinished?(val: boolean): void;
+      onUserChange?(user: User): void;
+    }
+  | undefined;
 
-export const userContext = createContext<ContextType>({
-  user: null,
-  onUserChange: () => {},
-});
+export const userContext = createContext<ContextType>(undefined);
 
 export default function UserContextProvider({
   children,
 }: PropsWithChildren<{}>) {
   const [user, setUser] = useState<User>(null);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     const userItem = localStorage.getItem("userLogged");
@@ -36,7 +38,9 @@ export default function UserContextProvider({
   };
 
   return (
-    <userContext.Provider value={{ user, onUserChange }}>
+    <userContext.Provider
+      value={{ user, onUserChange, isFinished, setIsFinished }}
+    >
       {children}
     </userContext.Provider>
   );
